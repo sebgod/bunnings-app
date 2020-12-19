@@ -2,6 +2,19 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>aspnet-App-9DE0B866-C1AE-466F-9A71-6A08B956FD96</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Update="app.db" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.1" />
+  </ItemGroup>
 
 </Project>
