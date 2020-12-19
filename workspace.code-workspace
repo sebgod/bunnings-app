@@ -1,0 +1,31 @@
+{
+	"folders": [
+		{
+			"name": "App",
+			"path": "App"
+		},
+		{
+			"name": "Api",
+			"path": "Api"
+		},
+		{
+			"name": "Business Logic",
+			"path": "BL"
+		},
+		{
+			"name": "Business Logic tests",
+			"path": "BL.Tests"
+		}
+	],
+	"settings": {},
+	"launch": {
+		"configurations": [],
+		"compounds": [{
+			"name": "Launch App & Api",
+			"configurations": [
+				".NET Core Launch (Api)",
+				".NET Core Launch (App)"
+			]
+		}]
+	}
+}
