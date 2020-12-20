@@ -14,10 +14,13 @@
 		},
 		{
 			"name": "Business Logic tests",
-			"path": "BL.Tests"
+			"path": "BL.Test"
+		},
+		{
+			"name": "Console",
+			"path": "CLI"
 		}
 	],
-	"settings": {},
 	"launch": {
 		"configurations": [],
 		"compounds": [{
@@ -27,5 +30,8 @@
 				".NET Core Launch (App)"
 			]
 		}]
+	},
+	"settings": {
+		"dotnet-test-explorer.testProjectPath": "BI.Test.csproj"
 	}
 }

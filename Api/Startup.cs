@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using BL;
 
 namespace Api
 {
@@ -26,7 +27,11 @@ namespace Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddOptions<PlateSolverOptions>()
+                .Bind(Configuration.GetSection(nameof(PlateSolverOptions)));
 
+            services.AddNovaAstrometryPlateSolverService();
+                        
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
