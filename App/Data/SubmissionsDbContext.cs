@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using App.Models;
 
 namespace App.Data
 {
@@ -13,5 +14,7 @@ namespace App.Data
         {
             
         }
+
+        public DbSet<SubmissionDBO> SubmissionDBOs { get; set; }
     }
 }

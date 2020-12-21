@@ -6,8 +6,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Identity;
 using App.Services;
 using App.Data;
+using App.Models;
 
 namespace App.Pages
 {
@@ -29,18 +31,35 @@ namespace App.Pages
         public Uri ImageUri { get; set; }
 
         [BindProperty]
-        public IList<Uri> Submissions {get; set;}
+        public IList<SubmissionDBO> Submissions { get; set; }
 
-        public void OnGet()
+        public async Task OnGetAsync()
         {
+            var user = User.Identity.Name;
 
+            Submissions = _submissionsDbContext.SubmissionDBOs.Where(p => p.User == user).ToList();
+            foreach (var submission in Submissions)
+            {
+                var jobsPerSubmission = await _apiService.GetJobsForSubmissionAsync(submission.ID);
+                // we currently only support one job
+                submission.Job = jobsPerSubmission.Jobs.FirstOrDefault();
+            }
         }
 
-        public void OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
-            _apiService.UploadImageForBlindPlateSolvingAsync(ImageUri);
+            var user = User.Identity.Name;
 
-            RedirectToPage();
+            var submission = await _apiService.UploadImageForBlindPlateSolvingAsync(ImageUri);
+            _submissionsDbContext.SubmissionDBOs.Add(
+                new SubmissionDBO {
+                    ID = submission.Id,
+                    User = user,
+                    ImageUri = submission.ImageUri
+                }
+            );
+            _submissionsDbContext.SaveChanges();
+            return RedirectToPage();
         }
     }
 }

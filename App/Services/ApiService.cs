@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Net.Http.Json;
@@ -11,9 +12,12 @@ namespace App.Services
     // b) that does not seem to support .NET 5.0 very well (no System.Text.Json)
     // so for now just copy the defintions 😞
     public record PlateSolveSubmissionModel(Uri ImageUri, string Session, int Id);
+    public record PlateSolveJobsForSubmissionModel(int Id, IList<Uri> Jobs);
 
     public interface IApiService
     {
+        Task<PlateSolveJobsForSubmissionModel> GetJobsForSubmissionAsync(int subId);
+
         Task<PlateSolveSubmissionModel> UploadImageForBlindPlateSolvingAsync(Uri imageUri, string session = default);
     }
 
@@ -26,6 +30,19 @@ namespace App.Services
         {
             _client = client;
             _logger = logger;
+        }
+
+        public async Task<PlateSolveJobsForSubmissionModel> GetJobsForSubmissionAsync(int subId)
+        {
+            var response = await _client.GetAsync($"platesolve/{subId}");
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadFromJsonAsync<PlateSolveJobsForSubmissionModel>();
+            }
+            else
+            {
+                return new PlateSolveJobsForSubmissionModel(subId, new Uri[0]);
+            }
         }
 
         public async Task<PlateSolveSubmissionModel> UploadImageForBlindPlateSolvingAsync(Uri imageUri, string session = default)

@@ -97,7 +97,7 @@ namespace BL
                 var jobUris =
                     from job in responseObject.Jobs
                     where job is not null
-                    select new Uri(_client.BaseAddress, $"api/jobs/{job}/");
+                    select new Uri(_client.BaseAddress, $"annotated_display/{job}");
                 return (true, jobUris.ToList());
             }
         }
