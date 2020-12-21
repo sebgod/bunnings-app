@@ -23,7 +23,8 @@ namespace Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAsync(int id)
+        [Route("{id:int}")]
+        public async Task<IActionResult> GetAsync([FromRoute] int id)
         {
             var (success, jobs) = await _plateSolverService.GetJobsForSubmissionAsync(id);
 

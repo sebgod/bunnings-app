@@ -71,7 +71,7 @@ namespace BL
             return new SubmissionHandle(authenticatedSession, responseObject.subid);
         }
 
-        public async Task<(bool, IList<int>)> GetJobsForSubmissionAsync(int subId)
+        public async Task<(bool, IList<Uri>)> GetJobsForSubmissionAsync(int subId)
         {
             var response = await _client.GetAsync($"api/submissions/{subId}");
 
@@ -84,11 +84,15 @@ namespace BL
                 
             if (responseObject.Jobs is null || !responseObject.Jobs.Any())
             {
-                return (true, new int[0]);
+                return (true, new Uri[0]);
             }
             else
             {
-                return (true, responseObject.Jobs.Where(p => p is not null).Cast<int>().ToList());
+                var jobUris =
+                    from job in responseObject.Jobs
+                    where job is not null
+                    select new Uri(_client.BaseAddress, $"api/jobs/{job}/");
+                return (true, jobUris.ToList());
             }
         }
 

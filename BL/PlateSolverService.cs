@@ -8,6 +8,6 @@ namespace BL
     {
         Task<SubmissionHandle> BlindSolveImageUriAsync(Uri imageUri, string session = default);
 
-        Task<(bool, IList<int>)> GetJobsForSubmissionAsync(int subId);
+        Task<(bool, IList<Uri>)> GetJobsForSubmissionAsync(int subId);
     }
 }

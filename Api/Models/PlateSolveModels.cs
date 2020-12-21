@@ -7,5 +7,5 @@ namespace Api.Models
 
     public record PlateSolveSubmissionModel(Uri ImageUri, string Session, int Id);
 
-    public record PlateSolveJobsForSubmissionModel(int Id, IList<int> Jobs);
+    public record PlateSolveJobsForSubmissionModel(int Id, IList<Uri> Jobs);
 }

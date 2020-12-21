@@ -1,23 +1,21 @@
 {
 	"folders": [
 		{
-			"name": "App",
 			"path": "App"
 		},
 		{
-			"name": "Api",
 			"path": "Api"
 		},
 		{
-			"name": "Business Logic",
+			"path": "Api.Test"
+		},
+		{
 			"path": "BL"
 		},
 		{
-			"name": "Business Logic tests",
 			"path": "BL.Test"
 		},
 		{
-			"name": "Console",
 			"path": "CLI"
 		}
 	],
