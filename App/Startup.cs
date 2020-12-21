@@ -12,6 +12,7 @@ using App.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using App.Services;
 
 namespace App
 {
@@ -27,6 +28,12 @@ namespace App
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // our stuff
+            services.AddHttpClient<IApiService, ApiService>(
+                client => client.BaseAddress = new Uri(Configuration[nameof(ApiService)])
+            );
+            services.AddDbContext<SubmissionsDbContext>(options => options.UseInMemoryDatabase("Submissions"));
+            // asp stuff
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlite(
                     Configuration.GetConnectionString("DefaultConnection")));
