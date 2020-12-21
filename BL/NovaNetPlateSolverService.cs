@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 
@@ -41,9 +42,12 @@ namespace BL
                 // no easy way to check if session key is expired. This will have to be handled downstream
                 return session;
             }
-            
+
             var response = await _client.PostAsync("api/login", EncodeRequestJson(new { apikey = _options.Value.ApiKey }));
-            var responseObject = await DecodeResponseJsonAsync<LoginResponse>(response);
+
+            response.EnsureSuccessStatusCode();
+
+            var responseObject = await response.Content.ReadFromJsonAsync<LoginResponse>();
 
             if (responseObject.status != "success")
             {
@@ -62,7 +66,9 @@ namespace BL
                 url = imageUri.ToString()
             }));
 
-            var responseObject = await DecodeResponseJsonAsync<UrlUploadResponse>(response);
+            response.EnsureSuccessStatusCode();
+
+            var responseObject = await response.Content.ReadFromJsonAsync<UrlUploadResponse>();
             if (responseObject.status != "success")
             {
                 throw new InvalidOperationException("uploading using image uri failed");
@@ -80,7 +86,7 @@ namespace BL
                 return (false, default);
             }
 
-            var responseObject = await DecodeResponseJsonAsync<SubmissionStatusResponse>(response);
+            var responseObject = await response.Content.ReadFromJsonAsync<SubmissionStatusResponse>();
                 
             if (responseObject.Jobs is null || !responseObject.Jobs.Any())
             {
@@ -101,8 +107,5 @@ namespace BL
             => new FormUrlEncodedContent(new []{
                 new KeyValuePair<string, string>("request-json", JsonSerializer.Serialize(request))
             });
-
-        internal static async Task<T> DecodeResponseJsonAsync<T>(HttpResponseMessage response)
-            => await JsonSerializer.DeserializeAsync<T>(await response.Content.ReadAsStreamAsync());
     }
 }
