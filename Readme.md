@@ -21,6 +21,7 @@ An entry should be submitted for further processing, and after a couple of minut
 
 ## Run using docker-compose
 
+First build as mentioned above (this will populate the user secrets which are used by the containers).
 Use the [following instructions](https://docs.microsoft.com/en-us/aspnet/core/security/docker-compose-https?view=aspnetcore-5.0) to
 create a password-based PFX developer certificate:
 
@@ -32,6 +33,6 @@ dotnet dev-certs https --trust
 Now you can run:
 
 ```
-ASPNETCORE_Kestrel__Certificates__Default__Password=<password> PlateSolverOptions__ApiKey=<api key> docker-compose up
+ASPNETCORE_Kestrel__Certificates__Default__Password=<password> docker-compose up
 ```
 Which now will make the App available at https://localhost:8001

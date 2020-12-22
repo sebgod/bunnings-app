@@ -23,7 +23,8 @@ services:
       context: .
       dockerfile: Api/Dockerfile
     volumes:
-      - $HOME/.aspnet/https:/https
+      - $HOME/.aspnet/https:/https:ro
+      - $HOME/.microsoft/usersecrets:/root/.microsoft/usersecrets:ro
     environment: 
       - PlateSolverOptions__ApiKey
     expose: [80]
