@@ -12,7 +12,7 @@ services:
     environment:
       - ASPNETCORE_HTTPS_PORT=8001
       - ApiService=http://api
-    links:
+    depends_on:
       - api
     ports: 
       - 8001:443
