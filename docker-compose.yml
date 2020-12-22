@@ -1,0 +1,29 @@
+version: '3.4'
+
+services:
+  app:
+    image: app
+    env_file: .env
+    build:
+      context: .
+      dockerfile: App/Dockerfile
+    volumes:
+      - $HOME/.aspnet/https:/https
+    environment:
+      - ASPNETCORE_HTTPS_PORT=8001
+      - ApiService=http://api
+    links:
+      - api
+    ports: 
+      - 8001:443
+  api:
+    image: api
+    env_file: .env
+    build:
+      context: .
+      dockerfile: Api/Dockerfile
+    volumes:
+      - $HOME/.aspnet/https:/https
+    environment: 
+      - PlateSolverOptions__ApiKey
+    expose: [80]
