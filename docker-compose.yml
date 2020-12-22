@@ -8,7 +8,7 @@ services:
       context: .
       dockerfile: App/Dockerfile
     volumes:
-      - $HOME/.aspnet/https:/https
+      - $HOME/.aspnet/https:/https:ro
       - app-db:/app/db
       - app-dataprotection-keys:/root/.aspnet/DataProtection-Keys
     environment:
@@ -27,8 +27,6 @@ services:
     volumes:
       - $HOME/.aspnet/https:/https:ro
       - $HOME/.microsoft/usersecrets:/root/.microsoft/usersecrets:ro
-    environment: 
-      - PlateSolverOptions__ApiKey
     expose: [80]
 
 volumes:
