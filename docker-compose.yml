@@ -9,6 +9,8 @@ services:
       dockerfile: App/Dockerfile
     volumes:
       - $HOME/.aspnet/https:/https
+      - app-db:/app/db
+      - app-dataprotection-keys:/root/.aspnet/DataProtection-Keys
     environment:
       - ASPNETCORE_HTTPS_PORT=8001
       - ApiService=http://api
@@ -28,3 +30,7 @@ services:
     environment: 
       - PlateSolverOptions__ApiKey
     expose: [80]
+
+volumes:
+  app-db:
+  app-dataprotection-keys:

@@ -13,7 +13,7 @@ FROM build AS publish
 RUN dotnet tool install dotnet-ef --tool-path .
 RUN ./dotnet-ef database update --configuration Release -v --context App.Data.ApplicationDbContext
 RUN dotnet publish "App.csproj" -c Release -o /app/publish
-RUN mv ./db /app/publish
+RUN mv db /app/publish
 
 FROM base AS final
 WORKDIR /app
