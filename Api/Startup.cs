@@ -31,7 +31,7 @@ namespace Api
                 .Bind(Configuration.GetSection(nameof(PlateSolverOptions)));
 
             services.AddNovaAstrometryPlateSolverService();
-                        
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
